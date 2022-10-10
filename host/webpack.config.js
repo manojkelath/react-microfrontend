@@ -1,25 +1,16 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
+
 const { ModuleFederationPlugin } = require('webpack').container;
-const ExternalTemplateRemotesPlugin = require('external-remotes-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = env => {
-
   return {
     entry: './src/index',
     mode: 'development',
-    devtool: 'source-map',
-    optimization: {
-      minimize: false,
-    },
     devServer: {
-      hot: false,
-      static: path.join(__dirname, 'dist'),
-      port: 3000,
-      historyApiFallback: {
-        index: 'index.html',
-      },
+      port: 3001,
     },
     output: {
       publicPath: 'auto',
@@ -39,20 +30,19 @@ module.exports = env => {
     },
     plugins: [
       new ModuleFederationPlugin({
-        name: 'host',
+        name: 'remote1',
+        filename: 'remoteEntry.js',
         remotes: {
-          remote1: env.prod ? 'remote1@[remote1UrlProd]/remoteEntry.js' : 'remote1@[remote1UrlDev]/remoteEntry.js',
-          libs: 'libs@[libsUrl]/remoteEntry.js',
+          remote1: 'remote1@http://localhost:3001/remoteEntry.js',
+          libs: 'libs@http://localhost:3002/remoteEntry.js'
         },
       }),
-      new ExternalTemplateRemotesPlugin(),
       new HtmlWebpackPlugin({
         template: './public/index.html',
-      }),
-      new LiveReloadPlugin({
-        port: 35729,
-      }),
+        chunks: ['main'],
+      })
     ],
   }
 
 };
+

@@ -1,22 +1,13 @@
 const { ModuleFederationPlugin } = require('webpack').container;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExternalTemplateRemotesPlugin = require('external-remotes-plugin');
 const path = require('path');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = env => {
   return {
     entry: './src/index',
     mode: 'development',
-    devtool: 'source-map',
-    optimization: {
-      minimize: false,
-    },
     devServer: {
-      hot: true,
-      static: path.join(__dirname, 'dist'),
       port: 3001,
-      liveReload: false,
     },
     output: {
       publicPath: 'auto',
@@ -30,7 +21,6 @@ module.exports = env => {
           exclude: /node_modules/,
           options: {
             presets: ['@babel/preset-react'],
-            plugins: [require.resolve('react-refresh/babel')],
           },
         },
       ],
@@ -44,17 +34,13 @@ module.exports = env => {
           './Heading': './src/Heading',
         },
         remotes: {
-          libs: env.prod ? 'libs@[libsUrlProd]/remoteEntry.js' : 'libs@[libsUrlDev]/remoteEntry.js',
+          libs: 'libs@http://localhost:3002/remoteEntry.js'
         },
       }),
-      new ExternalTemplateRemotesPlugin(),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         chunks: ['main'],
-      }),
-      new ReactRefreshWebpackPlugin({
-        exclude: [/node_modules/, /bootstrap\.js$/],
-      }),
+      })
     ],
   }
 
