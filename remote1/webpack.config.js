@@ -5,7 +5,6 @@ const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = env => {
-  console.log('env:', env.prod);
   return {
     entry: './src/index',
     mode: 'development',
