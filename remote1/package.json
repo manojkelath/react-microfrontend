@@ -4,7 +4,7 @@
   "main": "dist/main.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --env=PROD --mode production",
+    "build": "webpack --env=prod --mode production",
     "start": "webpack serve  --env=dev"
   },
   "devDependencies": {
