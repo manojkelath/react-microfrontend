@@ -10,7 +10,7 @@ module.exports = env => {
     entry: './src/index',
     mode: 'development',
     devServer: {
-      port: 3001,
+      port: 3000,
     },
     output: {
       publicPath: 'auto',
