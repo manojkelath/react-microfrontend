@@ -17,6 +17,7 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         './react': 'react',
+        './react-dom/client': 'react-dom/client',
         './react-dom': 'react-dom',
         './react-router-dom': 'react-router-dom',
       },

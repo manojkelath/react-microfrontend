@@ -1,8 +1,9 @@
 import React, { Suspense } from 'libs/react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'libs/react-router-dom';
 
-import Heading from 'remote1/Heading';
+// import Heading from 'remote1/Heading';
 
+const Heading = React.lazy(() => import('remote1/Heading'));
 const Button = React.lazy(() => import('remote1/Button'));
 
 const App = () => {
