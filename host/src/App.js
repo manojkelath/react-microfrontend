@@ -1,51 +1,118 @@
-import React, { Suspense } from 'libs/react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'libs/react-router-dom';
+import React, { useState } from 'libs/react';
+import { ChakraProvider } from 'libs/@chakra-ui/react'
+import NewButton from 'remote1/NewButton';
 
-// import Heading from 'remote1/Heading';
-
-const Heading = React.lazy(() => import('remote1/Heading'));
-const Button = React.lazy(() => import('remote1/Button'));
-
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  Link,
+  IconButton,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+} from 'libs/@chakra-ui/react';
+import { HamburgerIcon, CloseIcon, AddIcon } from 'libs/@chakra-ui/icons';
+const Links = ['Dashboard', 'Projects', 'Team'];
+const NavLink = ({ children }) => (
+  <Link
+    px={2}
+    py={1}
+    rounded={'md'}
+    _hover={{
+      textDecoration: 'none',
+      bg: useColorModeValue('gray.200', 'gray.700'),
+    }}
+    href={'#'}>
+    {children}
+  </Link>
+);
 const App = () => {
+  const [counter, setCounter] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+
   return (
-    <Router>
-      <div>
-        <div
-          style={{
-            margin: '10px',
-            padding: '10px',
-            textAlign: 'center',
-            backgroundColor: 'greenyellow',
-          }}
-        >
-          <h1>HOST</h1>
-          HOST ONLY SUPPORTS LIVE RELOAD. GO TO http://localhost:3001 to try out HMR
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/button">Button</Link>
-            </li>
-            <li>
-              <Link to="/heading">Heading</Link>
-            </li>
-          </ul>
-        </nav>
-        <Suspense fallback={'loading...'}>
-          <Switch>
-            <Route path="/button">
-              <Button />
-            </Route>
-            <Route path="/heading">
-              <Heading />
-            </Route>
-          </Switch>
-        </Suspense>
-      </div>
-    </Router>
+    <ChakraProvider>
+      <NewButton />
+      <main>
+        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+          <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            <IconButton
+              size={'md'}
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              aria-label={'Open Menu'}
+              display={{ md: 'none' }}
+              onClick={isOpen ? onClose : onOpen}
+            />
+            <HStack spacing={8} alignItems={'center'}>
+              <Box>Logo</Box>
+              <HStack
+                as={'nav'}
+                spacing={4}
+                display={{ base: 'none', md: 'flex' }}>
+                {Links.map((link) => (
+                  <NavLink key={link}>{link}</NavLink>
+                ))}
+              </HStack>
+            </HStack>
+            <Flex alignItems={'center'}>
+              <Button
+                variant={'solid'}
+                colorScheme={'teal'}
+                size={'sm'}
+                mr={4}
+                leftIcon={<AddIcon />}>
+                Action
+              </Button>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
+                  minW={0}>
+                  <Avatar
+                    size={'sm'}
+                    src={
+                      'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                    }
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>Link 2</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Link 3</MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+          </Flex>
+
+          {isOpen ? (
+            <Box pb={4} display={{ md: 'none' }}>
+              <Stack as={'nav'} spacing={4}>
+                {Links.map((link) => (
+                  <NavLink key={link}>{link}</NavLink>
+                ))}
+              </Stack>
+            </Box>
+          ) : null}
+        </Box>
+        <Box p={4}>Main Content Here</Box>
+
+        <h1>Remote 1's counter: {counter}</h1>
+        <button onClick={() => setCounter(counter => counter + 1)}>increment</button>
+      </main>
+    </ChakraProvider>
+
   );
 };
 

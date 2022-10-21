@@ -30,8 +30,7 @@ module.exports = env => {
         name: 'remote1',
         filename: 'remoteEntry.js',
         exposes: {
-          './Button': './src/Button',
-          './Heading': './src/Heading',
+          './NewButton': './src/NewButton'
         },
         remotes: {
           libs: 'libs@http://localhost:3002/remoteEntry.js'

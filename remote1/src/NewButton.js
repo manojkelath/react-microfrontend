@@ -1,14 +1,14 @@
 import React from 'libs/react';
 import { useHistory } from 'libs/react-router-dom';
 
-const Button = () => {
+const NewButton = () => {
   let history = useHistory();
 
   function handleClick() {
     history.push('/home');
   }
 
-  return <button onClick={handleClick}>from remote1: GO HOME</button>;
+  return <button onClick={handleClick}>NEW SPECIAL BUTTON</button>;
 };
 
-export default Button;
+export default NewButton;

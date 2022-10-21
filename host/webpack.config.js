@@ -30,10 +30,10 @@ module.exports = env => {
     },
     plugins: [
       new ModuleFederationPlugin({
-        name: 'remote1',
+        name: 'host',
         filename: 'remoteEntry.js',
         remotes: {
-          remote1: 'remote1@/mfremote/remoteEntry.js',
+          remote1: 'remote1@http://localhost:3001/remoteEntry.js',
           libs: 'libs@http://localhost:3002/remoteEntry.js'
         },
       }),
