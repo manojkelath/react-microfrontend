@@ -1,6 +1,3 @@
-
-
-
 const { ModuleFederationPlugin } = require('webpack').container;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -10,7 +7,7 @@ module.exports = env => {
     entry: './src/index',
     mode: 'development',
     devServer: {
-      port: 3000,
+      port: 3001,
     },
     output: {
       publicPath: 'auto',
@@ -30,11 +27,13 @@ module.exports = env => {
     },
     plugins: [
       new ModuleFederationPlugin({
-        name: 'host',
+        name: 'squad1',
         filename: 'remoteEntry.js',
+        exposes: {
+          './NewButton': './src/NewButton',
+          './Gauge': './src/Gauge'
+        },
         remotes: {
-          squad1: 'squad1@http://localhost:3001/remoteEntry.js',
-          squad2: 'squad2@http://localhost:3004/remoteEntry.js',
           libs: 'libs@http://localhost:3002/remoteEntry.js'
         },
       }),
@@ -46,4 +45,3 @@ module.exports = env => {
   }
 
 };
-

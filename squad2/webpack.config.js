@@ -7,7 +7,7 @@ module.exports = env => {
     entry: './src/index',
     mode: 'development',
     devServer: {
-      port: 3001,
+      port: 3004,
     },
     output: {
       publicPath: 'auto',
@@ -27,10 +27,11 @@ module.exports = env => {
     },
     plugins: [
       new ModuleFederationPlugin({
-        name: 'remote1',
+        name: 'squad2',
         filename: 'remoteEntry.js',
         exposes: {
-          './NewButton': './src/NewButton'
+          './NewButton2': './src/NewButton2',
+          './Gauge': './src/Gauge'
         },
         remotes: {
           libs: 'libs@http://localhost:3002/remoteEntry.js'
