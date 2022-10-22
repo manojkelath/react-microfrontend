@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'libs/react';
+import React, { useState, useEffect, Suspense } from 'libs/react';
 import { ChakraProvider } from 'libs/@chakra-ui/react'
 import NewButton from 'squad1/NewButton';
 import NewButton2 from 'squad2/NewButton2';
@@ -31,13 +31,20 @@ const Links = [
 
 const App = () => {
   const [counter, setCounter] = useState(0);
+  const [color, setColor] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const parentState = (color) => {
+    setColor(color);
+  }
+
+  useEffect(() => {
+    setColor('GREEN');
+  }, []);
 
   return (
     <ChakraProvider>
       <Router>
-
         <main>
           <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
             <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -96,16 +103,17 @@ const App = () => {
         </main>
         <Suspense fallback={'loading...'}>
           <Switch>
+
             <Route path="/squad1">
               <Box p={4}>
                 Content from squad1
-                <NewButton />
+                <NewButton color={color} />
               </Box>
             </Route>
             <Route path="/squad2">
               <Box p={4}>
                 Content from squad2
-                <NewButton2 />
+                <NewButton2 callParent={parentState} />
               </Box>
             </Route>
             <Route path="/squad3">
