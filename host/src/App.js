@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'libs/react';
 import { ChakraProvider } from 'libs/@chakra-ui/react'
-import NewButton from 'squad1/NewButton';
-import NewButton2 from 'squad2/NewButton2';
+import Squad1Component from 'squad1/Squad1Component';
+import Squad2Component from 'squad2/Squad2Component';
 
 import {
   Box,
@@ -30,16 +30,15 @@ const Links = [
 ];
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  const [color, setColor] = useState(0);
+  const [squadData, setSquadData] = useState('NoSquadsComplete');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const parentState = (color) => {
-    setColor(color);
+  const parentState = (squadData) => {
+    setSquadData(squadData);
   }
 
   useEffect(() => {
-    setColor('GREEN');
+
   }, []);
 
   return (
@@ -107,13 +106,13 @@ const App = () => {
             <Route path="/squad1">
               <Box p={4}>
                 Content from squad1
-                <NewButton color={color} />
+                <Squad1Component squadData={squadData} callParent={parentState} />
               </Box>
             </Route>
             <Route path="/squad2">
               <Box p={4}>
-                Content from squad2
-                <NewButton2 callParent={parentState} />
+                <div>Content from squad2</div>
+                <Squad2Component squadData={squadData} callParent={parentState} />
               </Box>
             </Route>
             <Route path="/squad3">

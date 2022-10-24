@@ -1,5 +1,5 @@
 import React, { useState } from 'libs/react';
-import NewButton from './NewButton';
+import Squad1Component from './Squad1Component';
 
 const App = () => {
   const [counter, setCounter] = useState(0);
@@ -8,7 +8,7 @@ const App = () => {
     <main>
       <h1>Remote 1's counter: {counter}</h1>
       <button onClick={() => setCounter(counter => counter + 1)}>increment</button>
-      <NewButton />
+      <Squad1Component />
     </main>
   );
 };

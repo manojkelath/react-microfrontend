@@ -30,7 +30,7 @@ module.exports = env => {
         name: 'squad2',
         filename: 'remoteEntry.js',
         exposes: {
-          './NewButton2': './src/NewButton2',
+          './Squad2Component': './src/Squad2Component',
           './Gauge': './src/Gauge'
         },
         remotes: {
